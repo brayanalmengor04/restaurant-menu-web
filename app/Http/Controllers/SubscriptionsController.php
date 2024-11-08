@@ -28,7 +28,25 @@ class SubscriptionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       // Validar el correo electrónico
+     // Validar el correo electrónico
+     $validated = $request->validate([
+        'email' => 'required|email',
+    ]);
+
+    // Verificar si el correo ya está registrado
+    if (Subscriptions::where('email', $validated['email'])->exists()) {
+        return redirect()->back()->with('error', 'Este correo ya está registrado.');
+    }
+
+    try {
+        // Crear una nueva suscripción
+        Subscriptions::create(['email' => $validated['email']]);
+        return redirect()->back()->with('success', '¡Te has suscrito correctamente!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'No se pudo completar la suscripción.');
+    }
+
     }
 
     /**

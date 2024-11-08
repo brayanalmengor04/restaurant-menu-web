@@ -30,12 +30,12 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="{{ route('welcome')}}" class="nav-item nav-link active">Home</a>
                     <a href="{{ route('category.create')}}" class="nav-item nav-link">Category</a>
-                    <a href="#" class="nav-item nav-link">Products</a>
+                    <a href="#" class="nav-item nav-link">Dishes</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Administrator</a>
                         <div class="dropdown-menu m-0">
                             <a href="{{ route('category.create')}}" class="dropdown-item">Category</a>
-                            <a href="feature.html" class="dropdown-item">Dishes</a>
+                            <a href="{{route ('dish.create')}}" class="dropdown-item">Dishes</a>
                             <a href="testimonial.html" class="dropdown-item">Subscriptions</a>
                         </div>
                     </div>

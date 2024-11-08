@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory; 
 use Illuminate\Database\Eloquent\Model;
 
 class Dishes extends Model
@@ -12,7 +12,6 @@ class Dishes extends Model
     protected $fillable = [
         'dish_name', 'dish_description', 'dish_price', 'dish_photo', 'category_id', 'user_id'
     ];
-
     public function category()
     {
         return $this->belongsTo(Category::class);
