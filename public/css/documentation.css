@@ -1,0 +1,36 @@
+.scroll-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #ddd; 
+    padding: 10px; 
+    border-radius: 5px; 
+    background-color: #f9f9f9;
+    font-family: monospace;
+}
+.response-box pre {
+    margin: 0;
+    font-size: 14px;
+}
+.key {
+    color: #ff79c6; /* Rosa */
+}
+.string {
+    color: #f1fa8c; /* Amarillo */
+}
+.number {
+    color: #bd93f9; /* Púrpura */
+}
+.boolean {
+    color: #50fa7b; /* Verde */
+}
+.null {
+    color: #6272a4; /* Azul grisáceo */
+}
+pre {
+    font-family: 'Fira Code', monospace;
+    background-color: #282a36; /* Fondo Drácula */
+    color: #f8f8f2; /* Texto Drácula */
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+}

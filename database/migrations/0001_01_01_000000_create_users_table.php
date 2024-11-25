@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('restaurant_name');
             $table->string('background_image')->nullable();
             $table->string('company_logo')->nullable();
-            $table->string('user_type');
+            $table->string('user_type'); // admin 
             $table->boolean('status')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

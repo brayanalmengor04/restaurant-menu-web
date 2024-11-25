@@ -30,10 +30,12 @@
                         <li class="list-group-item"><strong>Last Updated:</strong> {{ $dish->updated_at->format('d/m/Y') }}</li>
                     </ul>
                     
+                    @if(Auth::check() && Auth::user()->user_type == "admin")
                     <div class="d-flex justify-content-end mt-3">
                         <a href="{{ route('dish.edit', $dish->id) }}" class="btn btn-warning me-2">Edit</a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $dish->id }}">Delete</button>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

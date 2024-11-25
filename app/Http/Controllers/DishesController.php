@@ -5,30 +5,48 @@ use App\Models\Dishes;
 use App\Models\User; // Importar el modelo User
 use App\Models\Category; // Importar el modelo Category
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class DishesController extends Controller
 {
-
     public function index()
     {
-        // Aquí puedes listar los platos si lo deseas
-        $dishes = Dishes::all();
-        return view('pages.dishes.index', compact('dishes'));
+        $dishes = Dishes::with('category', 'user')->get();
+        $categories = Category::all();    
+        return view('pages.dishes.index', compact('dishes', 'categories'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // Obtener todos los usuarios y categorías para mostrarlos en el formulario
+    public function viewDishes(Request $request)
+{
+    $categoryId = $request->input('category');
+    
+    // Obtener platos del usuario autenticado, con filtro opcional por categoría
+    $dishes = Dishes::with('category', 'user')
+        ->where('user_id', auth()->id())
+        ->when($categoryId, function ($query, $categoryId) {
+            return $query->where('category_id', $categoryId);
+        })
+        ->get();
+    $categories = Category::all();
+    return view('template.menu.index', compact('dishes', 'categories'));
+}
+public function generateQrCode()
+{
+    $url = route('user.dishes'); // URL a la que el QR redirige
+    $qr = QrCode::size(300)->generate($url);
+    return view('template.menu.qr', compact('qr'));
+}
+public function create()
+{
+    if (auth()->user()->user_type === 'admin') {
+        // Si es admin, obtener todos los usuarios
         $users = User::all();
-        $categories = Category::all(); // Obtener las categorías
-
-        // Retornar la vista con los datos
-        return view('pages.dishes.create', compact('users', 'categories'));
+    } else {
+        // Si no es admin, solo obtener el usuario actual
+        $users = User::where('id', auth()->id())->get();
     }
-
+    $categories = Category::all();
+    return view('pages.dishes.create', compact('users', 'categories'));
+}
     /**
      * Store a newly created resource in storage.
      */

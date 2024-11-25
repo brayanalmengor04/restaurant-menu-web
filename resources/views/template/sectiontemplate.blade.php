@@ -33,8 +33,12 @@
 
     <body>
         <header>
-        @include("template.navbar.navbar")
-        <!-- Page Header Start -->
+        @if(Auth::check() && Auth::user()->user_type == "admin")
+            @include('template.navbar.navbar')
+            @else
+            @include('template.navbar.navbarpublic')
+        @endif 
+        
         <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container">
                 <h1 class="display-3 mb-3 animated slideInDown">@yield("section-title")</h1>
@@ -65,7 +69,9 @@
         <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
         <script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
         <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/dracula.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/json.min.js"></script>
         <!-- Template Javascript -->
         <script src="{{ asset('js/main.js') }}"></script>
         

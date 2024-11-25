@@ -20,7 +20,7 @@
     <!-- Spinner End -->
 
         <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
+            <a href="" class="navbar-brand ms-4 ms-lg-0">
                 <h1 class="fw-bold text-primary m-0">F<span class="text-secondary">oo</span>dy</h1>
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -29,14 +29,35 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="{{ route('welcome')}}" class="nav-item nav-link active">Home</a>
-                    <a href="{{ route('category.create')}}" class="nav-item nav-link">Category</a>
-                    <a href="#" class="nav-item nav-link">Dishes</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Record</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{{ route('category.index')}}" class="dropdown-item">Category Record</a>
+                            <a href="{{route ('dish.index')}}" class="dropdown-item">Dishes Record</a>
+                            <a href="{{route('subscriptions.index')}}" class="dropdown-item">Subscriptions Record </a> 
+                            <!-- Podre darle permisos para agregar categorias y productos -->
+                            <a href="{{ route('user.index')}}" class="dropdown-item">User Record</a> 
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">API PanamaAPI</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{{route('api.documentation')}}" class="dropdown-item">Documentation</a>
+                            <a href="{{route('provinces.view')}}" class="dropdown-item">Provincies Record</a>
+                            <a href="{{route('districts.view')}}" class="dropdown-item">District Record </a> 
+                        
+                            <a href="{{route('corregimientos.view')}}" class="dropdown-item">Corregmiento</a> 
+                        </div>
+                    </div>
+                    <a href="{{route('menu.qr')}}" class="nav-item nav-link">QR Preview</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Administrator</a>
                         <div class="dropdown-menu m-0">
                             <a href="{{ route('category.create')}}" class="dropdown-item">Category</a>
                             <a href="{{route ('dish.create')}}" class="dropdown-item">Dishes</a>
-                            <a href="testimonial.html" class="dropdown-item">Subscriptions</a>
+                            <a href="{{route('subscriptions.create')}}" class="dropdown-item">Subscriptions</a> 
+                            <!-- Podre darle permisos para agregar categorias y productos -->
+                            <a href="{{route('user.create')}}" class="dropdown-item">Administrator user</a> 
                         </div>
                     </div>
                     <a href="#" class="nav-item nav-link">Contact Us</a>
@@ -45,12 +66,25 @@
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
                         <small class="fa fa-search text-body"></small>
                     </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-user text-body"></small>
+                    <!-- Hacer login  -->
+                    @if (!Auth::check())
+                            <a class="btn-sm-square bg-white rounded-circle ms-3" href="{{ route('login') }}">
+                                <small class="fa fa-user text-body"></small>
+                            </a>
+                    @else
+                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="{{ route('user.edit', ['user' => Auth::id()]) }}">
+                     <small class="fa fa-user text-body"></small>
                     </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
+                    @endif
+                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="{{route('cart.index')}}">
                         <small class="fa fa-shopping-bag text-body"></small>
-                    </a>
+                    </a>  
+                    @if(Auth::check()) 
+                    <a class="d-flex align-items-center rounded-circle ms-3" href="{{ route('logout') }}">
+                        <small class="fa fa-user text-danger me-2"></small>
+                        <span class="text-danger">Log out</span>
+                    </a> 
+                    @endif
                 </div>
             </div>
         </nav>
