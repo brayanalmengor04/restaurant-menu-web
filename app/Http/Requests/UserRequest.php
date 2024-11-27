@@ -17,16 +17,15 @@ class UserRequest extends FormRequest
    
     public function rules(): array
     {
-        return [
-            'username' => 'required|string|max:255',
-           'email' => 'required|email|unique:users,email,',
-            'password' => 'nullable|string|min:8',
-            'contact_name' => 'required|string|max:255',
-            'restaurant_name' => 'nullable|string|max:255',
-           'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'user_type' => 'required|string',
-            'status' => 'required|boolean',
-        ];
+         return [
+        'username' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'contact_name' => 'nullable|string|max:255',
+        'restaurant_name' => 'nullable|string|max:255',
+        'user_type' => 'required|string',
+        'status' => 'required|boolean',
+        'background_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'company_logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ];
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\DishesController;
 use App\Http\Controllers\UserController; 
 use App\Http\Controllers\MainController; 
+
 use App\Http\Controllers\CartController; 
 use App\Http\Controllers\Api\LocationController;
 use Illuminate\Support\Facades\Route; 
@@ -26,6 +27,7 @@ Route::prefix('api/corregimientos')->group(function () {
     Route::put('/{corregimiento}', [CorregimientoController::class, 'update'])->name('corregimientos.update');
     Route::delete('/{corregimiento}', [CorregimientoController::class, 'destroy'])->name('corregimientos.delete');
 });
+
 // Corregimientos Views
 Route::prefix('corregimientos')->group(function () {
     Route::get('/view', [CorregimientoViewController::class, 'view'])->name('corregimientos.view');
@@ -63,9 +65,7 @@ Route::prefix('provinces')->group(function () {
     Route::get('/view', [ProvinceViewController::class, 'view'])->name('provinces.view');  // Vista de todas las provincias
     Route::get('/edit/{province}', [ProvinceViewController::class, 'edit'])->name('provinces.edit'); // Editar una provincia
 });
-
-
-
+Route::get('/reviews', [MainController::class, 'getTopReviews']);
 // Rating  
 Route::post('/rate-dish', [DishRatingController::class, 'rate'])->name('dish.rate');
 // Rutas para el carrito 

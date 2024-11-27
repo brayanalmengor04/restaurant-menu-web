@@ -37,30 +37,42 @@
                     @if (Auth::check())
                     <a href="{{route('menu.qr')}}" class="nav-item nav-link">QR Preview</a>
                     @endif
-                    <a href="#" class="nav-item nav-link">Contact Us</a> 
+
+                <div class="d-flex align-items-center">
+   			 <a href="#" class="nav-item nav-link">Contact Us</a>
+
+	    @if (!Auth::check())
+        	<!-- Botón de Login -->
+        	<a class="btn btn-sm btn-outline-danger rounded-pill ms-3 d-flex align-items-center" href="{{ route('login') }}">
+            		<small class="fa fa-user me-2"></small>
+            		<span>Login</span>
+        	</a>
+    	@else
+        	<!-- Botón de Perfil -->
+        <a class="btn btn-sm btn-outline-success rounded-pill ms-3 d-flex align-items-center" href="{{ route('user.edit', ['user' => Auth::id()]) }}">
+            <small class="fa fa-user me-2"></small>
+            <span>Perfil</span>
+        </a>
+    	@endif
+
+    @if (Auth::check())
+        <!-- Botón de Logout -->
+        <a class="btn btn-sm btn-outline-danger rounded-pill ms-3 d-flex align-items-center" href="{{ route('logout') }}">
+            <small class="fa fa-sign-out-alt me-2"></small>
+            <span>Log out</span>
+        </a>
+    @endif
+</div>	 
+                </div>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="#">
                         <small class="fa fa-search text-body"></small>
                     </a> 
-                    @if (!Auth::check())
-                            <a class="btn-sm-square bg-white rounded-circle ms-3" href="{{ route('login') }}">
-                                <small class="fa fa-user text-body"></small>
-                            </a>
-                    @else
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="{{ route('user.edit', ['user' => Auth::id()]) }}">
-                     <small class="fa fa-user text-success"></small>
-                    </a>
-                    @endif
+                   
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="{{route('cart.index')}}">
                         <small class="fa fa-shopping-bag text-body"></small>
                     </a>  
-                    @if(Auth::check()) 
-                    <a class="d-flex align-items-center rounded-circle ms-3" href="{{ route('logout') }}">
-                        <small class="fa fa-user text-danger me-2"></small>
-                        <span class="text-danger">Log out</span>
-                    </a> 
-                    @endif
                 </div>
             </div>
         </nav>

@@ -42,71 +42,79 @@
     </head>
     <body>
         <div class="container mt-5">
-            <!-- Header -->
-            <div class="text-center mb-4">
-                <h1 class="fw-bold">{{ auth()->user()->username }} - Menú</h1>
-                <p class="text-muted">Explore the dishes registered on your menu.</p>
-            </div>
+            <!-- Verificar autenticación -->
+            @if(auth()->check())
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold">{{ auth()->user()->username }} - Menú</h1>
+                    <p class="text-muted">Explore the dishes registered on your menu.</p>
+                </div>
 
-            <!-- Filtro por categorías -->
-            <div class="filter-section mb-4">
-                <form method="GET" action="{{ route('user.dishes') }}" class="d-flex">
-                    <select name="category" class="form-select me-2" style="flex: 1;">
-                        <option value="" selected>All categories</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                </form>
-            </div>
+                <!-- Filtro por categorías -->
+                <div class="filter-section mb-4">
+                    <form method="GET" action="{{ route('user.dishes') }}" class="d-flex">
+                        <select name="category" class="form-select me-2" style="flex: 1;">
+                            <option value="" selected>All categories</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </form>
+                </div>
 
-            <!-- Platos -->
-            @if($dishes->count() > 0)
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-                    @foreach($dishes as $dish)
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                @if($dish->dish_photo)
-                                    <img src="{{ asset('storage/' . $dish->dish_photo) }}" class="card-img-top" alt="{{ $dish->dish_name }}">
-                                @else
-                                    <img src="https://via.placeholder.com/300x200?text=Sin+Foto" class="card-img-top" alt="Sin foto">
-                                @endif
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">{{ $dish->dish_name }}</h5>
-                                    <p class="card-text text-muted">{{ Str::limit($dish->dish_description, 70, '...') }}</p>
-                                    <p class="card-text">
-                                        <strong>Precio:</strong> ${{ number_format($dish->dish_price, 2) }}
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Categoría:</strong> {{ $dish->category->category_name ?? 'Sin categoría' }}
-                                    </p>
-                                </div>
-                                <div class="card-footer">
-                                    <a href="{{ route('dish.show', $dish->id) }}" class="btn btn-sm btn-primary">Detalles</a>
-                                    <a href="{{ route('dish.edit', $dish->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                                    <form action="{{ route('dish.destroy', $dish->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este plato?')">Eliminar</button>
-                                    </form>
+                <!-- Platos -->
+                @if($dishes->count() > 0)
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                        @foreach($dishes as $dish)
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    @if($dish->dish_photo)
+                                     <img src="{{ asset($dish->dish_photo) }}" class="card-img-top" alt="{{ $dish->dish_name }}">
+
+                                    @else
+                                        <img src="https://via.placeholder.com/300x200?text=Sin+Foto" class="card-img-top" alt="Sin foto">
+                                    @endif
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold">{{ $dish->dish_name }}</h5>
+                                        <p class="card-text text-muted">{{ Str::limit($dish->dish_description, 70, '...') }}</p>
+                                        <p class="card-text">
+                                            <strong>Precio:</strong> ${{ number_format($dish->dish_price, 2) }}
+                                        </p>
+                                        <p class="card-text">
+                                            <strong>Categoría:</strong> {{ $dish->category->category_name ?? 'Sin categoría' }}
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="{{ route('dish.show', $dish->id) }}" class="btn btn-sm btn-primary">Detalles</a>
+                                        <a href="{{ route('dish.edit', $dish->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                        <form action="{{ route('dish.destroy', $dish->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este plato?')">Eliminar</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="text-center mt-4">
-                    <a href="{{ route('dish.create') }}" class="btn btn-success">Register new dish</a>
-                    <a href="{{ route('welcome') }}" class="btn btn-danger">Back</a>
-                </div>
-                
+                        @endforeach
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{{ route('dish.create') }}" class="btn btn-success">Register new dish</a>
+                        <a href="{{ route('welcome') }}" class="btn btn-danger">Back</a>
+                    </div>
+                @else
+                    <div class="alert alert-info text-center">
+                        <h4>You do not have registered dishes.</h4>
+                        <p>You can start by registering a new dish in the system.</p>
+                        <a href="{{ route('dish.create') }}" class="btn btn-primary">Register dish</a>
+                    </div> 
+                @endif
             @else
-                <div class="alert alert-info text-center">
-                    <h4>You do not have registered dishes.</h4>
-                    <p>You can start by registering a new dish in the system.</p>
-                    <a href="{{ route('dish.create') }}" class="btn btn-primary">Register dish</a>
-                </div> 
-                
+                <!-- Mostrar mensaje para usuarios no autenticados -->
+                <div class="alert alert-warning text-center">
+                    <h4>Please log in to manage your dishes.</h4>
+                    <a href="{{ route('login') }}" class="btn btn-primary">Log in</a>
+                </div>
             @endif
         </div>
 

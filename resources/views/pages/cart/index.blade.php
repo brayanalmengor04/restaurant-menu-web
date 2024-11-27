@@ -43,7 +43,12 @@
                                         @endphp
                                         <div class="d-flex justify-content-between align-items-center border-bottom py-3">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('storage/' . $item['photo']) }}" alt="{{ $item['name'] }}" style="width: 70px; height: 70px; object-fit: cover; margin-right: 15px;">
+                                             <img 
+   					src="{{ $item['photo'] ? $item['photo'] : 'https://via.placeholder.com/70' }}" 
+alt="{{ $item['name'] }}"
+    style="width: 70px; height: 70px; object-fit: cover; margin-right: 15px;"
+>
+
                                                 <div>
                                                     <h6 class="mb-0">{{ $item['name'] }}</h6>
                                                     <small class="text-muted">Unit price: ${{ $item['price'] }}</small>

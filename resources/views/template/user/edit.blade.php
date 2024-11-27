@@ -7,127 +7,63 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-   <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #eceff1, #f8f9fa);
-            color: #333;
+ <style>
+    @media (max-width: 768px) {
+        .profile-card {
+            width: 90%; /* Se ajusta al ancho disponible */
             padding: 20px;
         }
 
-        .principal-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        .form-floating label {
+            font-size: 0.9rem; /* Reducir texto de etiquetas en inputs */
         }
 
-        .profile-card {
-            display: flex; 
-            background: url()
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            width: 500px;
-            text-align: center;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .nav-tabs .nav-link {
+            font-size: 0.85rem; /* Ajuste menor de fuentes */
+            padding: 6px 10px; /* Reducción de tamaño en pestañas */
         }
 
-        .profile-card img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid #6c757d;
-        }
-
-        .profile-card h4 {
-            margin-top: 15px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .profile-card p {
-            color: #6c757d;
-        }
-
-        .profile-card .btn {
-            border: none;
-            color: #333;
-            background: #eceff1;
-            transition: all 0.3s ease;
-        }
-
-        .profile-card .btn:hover {
-            background: #007bff;
-            color: #fff;
-        }
-
-        .nav-tabs {
-            margin-bottom: 20px;
-            border-bottom: none;
-        }
-
-        .nav-link {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            color: #333;
-            margin: 0 5px;
-            padding: 8px 15px;
-        }
-
-        .nav-link.active {
-            background-color: #007bff;
-            color: #fff;
-            border-color: #007bff;
-        }
-
-        .form-floating {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .form-control {
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+        .btn {
+            font-size: 0.9rem;
+            padding: 10px 20px;
         }
 
         .btn-dark {
-            background-color: #007bff;
-            border-color: #007bff;
+            padding: 10px 20px;
         }
 
-        .btn-dark:hover {
-            background-color: #0056b3;
+        .principal-container {
+            padding: 10px; /* Reducir márgenes en contenedores */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .profile-card img {
+            width: 80px; /* Disminuir tamaño de imagen */
+            height: 80px;
         }
 
-        .alert {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1050;
-            animation: fadeIn 0.5s ease-in-out;
+        .nav-tabs {
+            flex-wrap: wrap; /* Permite saltos de línea en pestañas */
+            justify-content: center;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .nav-tabs .nav-link {
+            margin-bottom: 5px; /* Añade espacio vertical */
         }
-    </style>
+
+        .btn-dark {
+            font-size: 0.8rem;
+            padding: 8px 16px; /* Compactar botones */
+        }
+
+        .principal-container {
+            flex-direction: column; /* Contenedor más compacto */
+            align-items: stretch;
+        }
+    }
+</style>
+
 </head>
 <body>
 <div class="principal-container">
@@ -141,11 +77,11 @@
 
     <div class="d-flex flex-column align-items-center w-100">
         <!-- Card de perfil -->
-        <div class="profile-card" style="background-image: url('{{ $user->background_image ? asset('storage/' . $user->background_image) : 'https://via.placeholder.com/500' }}');">
-            <img src="{{ $user->company_logo ? asset('storage/' . $user->company_logo) : 'https://via.placeholder.com/100' }}" alt="Profile">
-            <h4>{{ $user->username }}</h4>
-            <p>{{ $user->contact_name }}</p>
-        </div>
+       <div class="profile-card" style="background-image: url('{{ asset($user->background_image ?: 'https://via.placeholder.com/500') }}');">
+    <img src="{{ asset($user->company_logo ?: 'https://via.placeholder.com/100') }}" alt="Profile">
+    <h4>{{ $user->username }}</h4>
+    <p>{{ $user->contact_name }}</p>
+</div>
 
         <!-- Formulario con pestañas -->
         <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST" enctype="multipart/form-data" class="mt-4 w-100" style="max-width: 600px;">

@@ -2,16 +2,18 @@
 @section("title", "User Manager")
 @section("section-title", "User")
 @section("content")
-    <div class="container my-4">
-        <h2 class="text-center mb-4">User List</h2>
+<div class="container my-4">
+    <h2 class="text-center mb-4">User List</h2>
 
-        <!-- Success message -->
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+    <!-- Success message -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
+    <!-- Responsive Table Wrapper -->
+    <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
@@ -28,11 +30,16 @@
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td>{{ $user->username }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->contact_name }}</td>
-                        <td>{{ $user->restaurant_name }}</td>
-                        <td>{{ $user->status }}</td>
+                        <td>{{ Str::limit($user->username, 15, '...') }}</td>
+                        <td>{{ Str::limit($user->email, 20, '...') }}</td>
+                        <td>{{ Str::limit($user->contact_name, 20, '...') }}</td>
+                        <td>{{ Str::limit($user->restaurant_name, 20, '...') }}</td>
+                        <td>
+                            <span class="badge 
+                                {{ $user->status === 'Active' ? 'bg-success' : 'bg-danger' }}">
+                                {{ $user->status }}
+                            </span>
+                        </td>
                         <td class="text-center">
                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm mx-1">
                                 <i class="fas fa-edit"></i> Edit
@@ -68,4 +75,5 @@
             </tbody>
         </table>
     </div>
+</div>
 @stop

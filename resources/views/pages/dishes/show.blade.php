@@ -10,16 +10,16 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">{{ $dish->dish_name }}</h5>
-                    @if($dish->user->company_logo)
-                        <!-- Imagen de logo de la empresa -->
-                        <img src="{{ asset('storage/' . $dish->user->company_logo) }}" alt="Company Logo" class="rounded-circle" style="width: 50px; height: 50px;">
-                    @endif
-                </div>
-                
-                @if($dish->user->background_image)
-                    <!-- Imagen de fondo -->
-                    <img src="{{ asset('storage/' . $dish->user->background_image) }}" class="card-img-top" alt="Background Image">
-                @endif
+                  @if($dish->user->company_logo)
+    <!-- Imagen de logo de la empresa -->
+    <img src="{{ asset($dish->user->company_logo) }}" alt="Company Logo" class="rounded-circle" style="width: 50px; height: 50px;">
+@endif
+</div>
+
+@if($dish->user->background_image)
+    <!-- Imagen de fondo -->
+    <img src="{{ asset($dish->user->background_image) }}" class="card-img-top" alt="Background Image">
+@endif
                 <div class="card-body"> 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>Created By:</strong> {{ $dish->user->username ?? 'Unknown' }}</li>

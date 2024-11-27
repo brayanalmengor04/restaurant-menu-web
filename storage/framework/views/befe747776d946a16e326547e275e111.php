@@ -1,3 +1,4 @@
+
 <?php $__env->startSection("title","Sistema Restaurante -Principal Pages"); ?>
 <?php $__env->startSection("content"); ?>  
     <!-- Reducir coding --> 
@@ -35,24 +36,21 @@
     <!-- Administrador  ------------->
             </div>
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-    <h1 class="display-5 mb-4">Innovative Web Solution for Menu & Dish Management</h1>
-    <p class="mb-4">
-        Welcome to our cutting-edge restaurant management platform. Designed to simplify and enhance the dining experience, our web application empowers users to create, customize, and manage their menus effortlessly. Explore a range of features tailored to meet the needs of restaurants and food enthusiasts alike.
-    </p>
-    <p><i class="fa fa-check text-primary me-3"></i>Create and manage dynamic menus with ease</p>
-    <p><i class="fa fa-check text-primary me-3"></i>Integrated API documentation for seamless development</p>
-    <p><i class="fa fa-check text-primary me-3"></i>Rate and review dishes to enhance user engagement</p>
-    <p><i class="fa fa-check text-primary me-3"></i>Generate QR codes to share menus with customers instantly</p>
-    <p><i class="fa fa-check text-primary me-3"></i>Access menus and ratings by specific users</p>
-    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3 d-flex align-items-center justify-content-center" 
-       href="https://github.com/brayanalmengor04" 
-       style="background-color: #333; color: white; border: none;">
-       <i class="fab fa-github me-2"></i> Developer Github
-    </a>
-</div>
-
-
-
+                    <h1 class="display-5 mb-4">Innovative Web Solution for Menu & Dish Management</h1>
+                    <p class="mb-4">
+                        Welcome to our cutting-edge restaurant management platform. Designed to simplify and enhance the dining experience, our web application empowers users to create, customize, and manage their menus effortlessly. Explore a range of features tailored to meet the needs of restaurants and food enthusiasts alike.
+                    </p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Create and manage dynamic menus with ease</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Integrated API documentation for seamless development</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Rate and review dishes to enhance user engagement</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Generate QR codes to share menus with customers instantly</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Access menus and ratings by specific users</p>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3 d-flex align-items-center justify-content-center" 
+                    href="https://github.com/brayanalmengor04" 
+                    style="background-color: #333; color: white; border: none;">
+                    <i class="fab fa-github me-2"></i> Developer Github
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -105,10 +103,18 @@
                     <div class="card shadow-sm border-0 h-100">
                         <!-- Dish Image -->
                         <div class="position-relative">
-                        <img class="card-img-top rounded-top" 
-                             src="<?php echo e($dish->dish_photo ? asset('storage/' . $dish->dish_photo) : asset('img/placeholder.png')); ?>" 
-                             alt="<?php echo e($dish->dish_name); ?>" 
-                            style="height: 200px; object-fit: cover;">
+                        <img class="card-img-top rounded-top"
+                        src="<?php echo e(asset($dish->dish_photo) ? :  'https://via.placeholder.com/300?text=No+Image+Available'); ?>""
+                         alt="<?php echo e($dish->dish_name); ?>"
+                        style="height: 200px; object-fit: cover;">
+<!--                         
+                        Solucion del storage en produccion necesita SSH
+                        <div class="position-relative">
+                        <img class="card-img-top rounded-top"
+                        src="<?php echo e(asset($dish->dish_photo)); ?>"
+                         alt="<?php echo e($dish->dish_name); ?>"
+                        style="height: 200px; object-fit: cover;"> -->
+
                             <div class="position-absolute top-0 end-0 bg-primary text-white px-3 py-1 rounded-start">
                                 <strong><?php echo e($dish->average_rating); ?>/5</strong>
                             </div>
@@ -153,6 +159,46 @@
     </div>
 </div>
 
+<?php if($reviews->isEmpty()): ?>
+    <p>No hay reseñas disponibles.</p>
+<?php else: ?>
+    <!-- Testimonial Start -->
+    <div class="container-fluid bg-light bg-icon py-6 mb-5">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-3">Customer Review</h1>
+                <p>A space where users share feedback, ratings, and experiences to help others make informed decisions and build trust through honest opinions.</p>
+            </div>
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <?php $__currentLoopData = $reviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="testimonial-item position-relative bg-white p-5 mt-4">
+                        <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
+                        <p class="mb-4"><?php echo e($review->review); ?></p>
+                        
+                        <!-- Sistema de estrellas -->
+                        <div class="rating mb-3">
+                            <?php for($i = 1; $i <= 5; $i++): ?>
+                                <i class="fa fa-star<?php echo e($i <= $review->rating ? ' text-warning' : '-o'); ?>"></i>
+                            <?php endfor; ?>
+                        </div>
+                        
+                        <div class="d-flex align-items-center">
+                            <img class="flex-shrink-0 rounded-circle" 
+                                 src="https://via.placeholder.com/150" 
+                                 alt="User Image">
+                            <div class="ms-3">
+                                <h5 class="mb-1"><?php echo e($review->user->username); ?></h5>
+                                <span><?php echo e($review->user->email); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+<?php endif; ?>
+
 <!-- Productos agregados -->
 <div class="container-xxl py-5">
     <div class="container">
@@ -164,26 +210,28 @@
                     <p>Explore a wide range of delicious dishes.</p>
                 </div>
             </div>
-            <div class="col-lg-6 text-start text-lg-end">
-                <?php if(isset($categories) && $categories->isNotEmpty()): ?>
-                    <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                        <li class="nav-item me-2">
-                            <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#all">All</a>
-                        </li>
-                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-<?php echo e($category->id); ?>">
-                                    <?php echo e($category->category_name); ?>
+           <div class="col-lg-6 text-start text-lg-end">
+    <?php if(isset($categories) && $categories->isNotEmpty()): ?>
+        <div class="d-flex justify-content-start justify-content-lg-end overflow-auto mb-5">
+            <ul class="nav nav-pills d-inline-flex">
+                <li class="nav-item me-2">
+                    <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#all">All</a>
+                </li>
+                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-<?php echo e($category->id); ?>">
+                            <?php echo e($category->category_name); ?>
 
-                                </a>
-                            </li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </ul>
-                <?php else: ?>
-                    <p class="text-muted">No categories available.</p>
-                <?php endif; ?>
-            </div>
+                        </a>
+                    </li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </ul>
         </div>
+    <?php else: ?>
+        <p class="text-muted">No categories available.</p>
+    <?php endif; ?>
+</div>
+
         <!-- Sección de platos -->
         <div class="tab-content">
             <!-- Todos los platos -->
@@ -195,9 +243,10 @@
                                 <div class="product-item">
                                     <div class="position-relative bg-light overflow-hidden">
                                         <div class="img-container">
-                                        <img class="img-fluid" 
-                                            src="<?php echo e($dish->dish_photo ? asset('storage/' . $dish->dish_photo) : 'https://via.placeholder.com/300?text=No+Image+Available'); ?>" 
-                                             alt="<?php echo e($dish->dish_name); ?>">
+                                        <img class="img-fluid"
+                                            src="<?php echo e(asset($dish->dish_photo) ? :  'https://via.placeholder.com/300?text=No+Image+Available'); ?>"
+                                            alt="<?php echo e($dish->dish_name); ?>"
+                                           >
 
                                         </div>
                                         <?php if($dish->created_at > now()->subDays(7)): ?>
@@ -255,7 +304,7 @@
                                         <div class="product-item">
                                             <div class="position-relative bg-light overflow-hidden">
                                                 <div class="img-container">
-                                                    <img class="img-fluid" src="<?php echo e(asset('storage/' . $dish->dish_photo)); ?>" alt="<?php echo e($dish->dish_name); ?>">
+                                                    <img class="img-fluid" src="<?php echo e(asset($dish->dish_photo) ? :  'https://via.placeholder.com/300?text=No+Image+Available'); ?>" alt="<?php echo e($dish->dish_name); ?>">
                                                 </div>
                                                 <?php if($dish->created_at > now()->subDays(7)): ?>
                                                     <div class="bg-secondary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">New</div>
@@ -301,6 +350,7 @@
         </div>
     </div>
 </div>
+
 <!-- Si estoy logeado puedo hacer la reseña  -->
 <?php if(auth()->check()): ?>
    <!-- Modal de calificación -->

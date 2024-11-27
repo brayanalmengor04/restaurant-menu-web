@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 });
 
-
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/api/districts')
         .then(response => response.json())

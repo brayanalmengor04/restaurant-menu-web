@@ -26,37 +26,39 @@ class UserController extends Controller
         return view('template.user.create');
     }
     public function store(UserRequest $request)
-    {
-        $activationToken = \Str::random(64);
-    
-        $backgroundImagePath = $request->file('background_image') 
-            ? $request->file('background_image')->store('background_images', 'public') 
-            : null;
-        $companyLogoPath = $request->file('company_logo') 
-            ? $request->file('company_logo')->store('company_logos', 'public') 
-            : null;
-    
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'contact_name' => $request->contact_name,
-            'restaurant_name' => $request->restaurant_name ?? '',
-            'background_image' => $backgroundImagePath,
-            'company_logo' => $companyLogoPath,
-            'user_type' => $request->user_type,
-            'status' => 0, // Inactivo hasta que confirme el correo
-            'activation_token' => $activationToken,
-        ]);
-        $activationUrl = route('user.activate', ['token' => $activationToken]);
-        Mail::to($user->email)->send(new ActivationEmail($activationUrl));
-    
-        return redirect()->route('welcome')->with([
-            'success' => 'User registered successfully.',
-            'confirmation_message' => 'Please check your email to activate your account.'
-        ]);
-    }
-    
+{
+    $activationToken = \Str::random(64);
+
+    $backgroundImagePath = $request->file('background_image')
+        ? 'userimage/backgroundimg/' . $request->file('background_image')->move('userimage/backgroundimg', uniqid() . '.' . $request->file('background_image')->getClientOriginalExtension())->getFilename()
+        : null;
+
+    $companyLogoPath = $request->file('company_logo')
+        ? 'userimage/companylogo/' . $request->file('company_logo')->move('userimage/companylogo', uniqid() . '.' . $request->file('company_logo')->getClientOriginalExtension())->getFilename()
+        : null;
+
+    $user = User::create([
+        'username' => $request->username,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'contact_name' => $request->contact_name,
+        'restaurant_name' => $request->restaurant_name ?? '',
+        'background_image' => $backgroundImagePath,
+        'company_logo' => $companyLogoPath,
+        'user_type' => $request->user_type,
+        'status' => 0,
+        'activation_token' => $activationToken,
+    ]);
+
+    $activationUrl = route('user.activate', ['token' => $activationToken]);
+    Mail::to($user->email)->send(new ActivationEmail($activationUrl));
+
+    return redirect()->route('welcome')->with([
+        'success' => 'User registered successfully.',
+        'confirmation_message' => 'Please check your email to activate your account.',
+    ]);
+}
+
     public function show(User $user)
     {
         // Mostrar detalles de un usuario específico
@@ -68,38 +70,38 @@ class UserController extends Controller
         return view('template.user.edit', compact('user'));
     }
 
-    public function update(UserRequest $request, User $user)
-    {
-        // Actualizar el usuario
-        $user->update([
-            'username' => $request->username,
-            'email' => $request->email,
-            'contact_name' => $request->contact_name,
-            'restaurant_name' => $request->restaurant_name ?? '',
-            'user_type' => $request->user_type,
-            'status' => $request->status,
-        ]);
+   public function update(UserRequest $request, User $user)
+{
+    $user->update([
+        'username' => $request->username,
+        'email' => $request->email,
+        'contact_name' => $request->contact_name,
+        'restaurant_name' => $request->restaurant_name ?? '',
+        'user_type' => $request->user_type,
+        'status' => $request->status,
+    ]);
 
-        // Actualizar la imagen de fondo si se proporciona
-        if ($request->hasFile('background_image')) {
-            if ($user->background_image) {
-                Storage::disk('public')->delete($user->background_image); // Elimina la imagen anterior si existe
-            }
-            $user->background_image = $request->file('background_image')->store('background_images', 'public');
+    if ($request->hasFile('background_image')) {
+        if ($user->background_image) {
+            Storage::delete('userimage/backgroundimg/' . basename($user->background_image));
         }
-        
-        if ($request->hasFile('company_logo')) {
-            if ($user->company_logo) {
-                Storage::disk('public')->delete($user->company_logo); // Elimina la imagen anterior si existe
-            }
-            $user->company_logo = $request->file('company_logo')->store('company_logos', 'public');
-        }
-        
-
-        $user->save();
-
-        return redirect()->route('user.edit', $user)->with('success', 'User updated successfully');
+        $file = $request->file('background_image');
+        $user->background_image = 'userimage/backgroundimg/' . $file->move('userimage/backgroundimg', uniqid() . '.' . $file->getClientOriginalExtension())->getFilename();
     }
+
+    if ($request->hasFile('company_logo')) {
+        if ($user->company_logo) {
+            Storage::delete('userimage/companylogo/' . basename($user->company_logo));
+        }
+        $file = $request->file('company_logo');
+        $user->company_logo = 'userimage/companylogo/' . $file->move('userimage/companylogo', uniqid() . '.' . $file->getClientOriginalExtension())->getFilename();
+    }
+
+    $user->save();
+
+    return redirect()->route('user.edit', $user)->with('success', 'User updated successfully');
+}
+
 
     public function destroy(User $user)
     {

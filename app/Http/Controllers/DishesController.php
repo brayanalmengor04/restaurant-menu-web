@@ -50,37 +50,71 @@ public function create()
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     // Validar los datos del formulario
+    //     $validated = $request->validate([
+    //         'user_id' => 'required|exists:users,id',
+    //         'dish_name' => 'required|string|max:255',
+    //         'dish_description' => 'nullable|string',
+    //         'dish_price' => 'required|numeric|min:0',
+    //         'dish_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'category_id' => 'required|exists:categories,id',
+    //     ]);
+
+    //     // Subir la foto si se proporciona
+    //     $photoPath = null;
+    //     if ($request->hasFile('dish_photo')) {
+    //         $photoPath = $request->file('dish_photo')->store('dish_photos', 'public');
+    //     }
+
+    //     // Crear el plato en la base de datos
+    //     Dishes::create([
+    //         'user_id' => $validated['user_id'],
+    //         'dish_name' => $validated['dish_name'],
+    //         'dish_description' => $validated['dish_description'],
+    //         'dish_price' => $validated['dish_price'],
+    //         'dish_photo' => $photoPath,
+    //         'category_id' => $validated['category_id'],
+    //     ]);
+
+    //     // Redirigir al usuario con un mensaje de éxito
+    //     return redirect()->route('dish.create')->with('success', 'Dish created successfully!');
+    // }
+
     public function store(Request $request)
-    {
-        // Validar los datos del formulario
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'dish_name' => 'required|string|max:255',
-            'dish_description' => 'nullable|string',
-            'dish_price' => 'required|numeric|min:0',
-            'dish_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => 'required|exists:categories,id',
-        ]);
+{
+    // Validar los datos del formulario
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'dish_name' => 'required|string|max:255',
+        'dish_description' => 'nullable|string',
+        'dish_price' => 'required|numeric|min:0',
+        'dish_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'category_id' => 'required|exists:categories,id',
+    ]);
 
-        // Subir la foto si se proporciona
-        $photoPath = null;
-        if ($request->hasFile('dish_photo')) {
-            $photoPath = $request->file('dish_photo')->store('dish_photos', 'public');
-        }
-
-        // Crear el plato en la base de datos
-        Dishes::create([
-            'user_id' => $validated['user_id'],
-            'dish_name' => $validated['dish_name'],
-            'dish_description' => $validated['dish_description'],
-            'dish_price' => $validated['dish_price'],
-            'dish_photo' => $photoPath,
-            'category_id' => $validated['category_id'],
-        ]);
-
-        // Redirigir al usuario con un mensaje de éxito
-        return redirect()->route('dish.create')->with('success', 'Dish created successfully!');
+    // Subir la foto si se proporciona
+    $photoPath = null;
+    if ($request->hasFile('dish_photo')) {
+        $photoPath = 'images/' . $request->file('dish_photo')
+            ->move(public_path('images'), uniqid() . '.' . $request->file('dish_photo')->getClientOriginalExtension())
+            ->getFileName();
     }
+
+    // Crear el plato en la base de datos
+    Dishes::create([
+        'user_id' => $validated['user_id'],
+        'dish_name' => $validated['dish_name'],
+        'dish_description' => $validated['dish_description'],
+        'dish_price' => $validated['dish_price'],
+        'dish_photo' => $photoPath,
+        'category_id' => $validated['category_id'],
+    ]);
+
+    // Redirigir al usuario con un mensaje de éxito
+    return redirect()->route('dish.create')->with('success', 'Dish created successfully!');
+}
 
     /**
      * Display the specified resource.
@@ -104,36 +138,70 @@ public function create()
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, Dishes $dish)
+    // {
+    //     // Validar los datos del formulario para actualizar
+    //     $validated = $request->validate([
+    //         'user_id' => 'required|exists:users,id',
+    //         'dish_name' => 'required|string|max:255',
+    //         'dish_description' => 'nullable|string',
+    //         'dish_price' => 'required|numeric|min:0',
+    //         'dish_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'category_id' => 'required|exists:categories,id',
+    //     ]);
+    
+    //     // Actualizar la foto si se proporciona
+    //     if ($request->hasFile('dish_photo')) {
+    //         $photoPath = $request->file('dish_photo')->store('dish_photos', 'public');
+    //         $dish->dish_photo = $photoPath;
+    //     }
+    
+    //     // Actualizar los datos del plato
+    //     $dish->update([
+    //         'user_id' => $validated['user_id'],
+    //         'dish_name' => $validated['dish_name'],
+    //         'dish_description' => $validated['dish_description'],
+    //         'dish_price' => $validated['dish_price'],
+    //         'category_id' => $validated['category_id'],
+    //     ]);
+    
+    //     // Redirigir con mensaje de éxito
+    //     return redirect()->route('dish.index')->with('success', 'Dish updated successfully!');
+    // }    
+
     public function update(Request $request, Dishes $dish)
-    {
-        // Validar los datos del formulario para actualizar
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'dish_name' => 'required|string|max:255',
-            'dish_description' => 'nullable|string',
-            'dish_price' => 'required|numeric|min:0',
-            'dish_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => 'required|exists:categories,id',
-        ]);
-    
-        // Actualizar la foto si se proporciona
-        if ($request->hasFile('dish_photo')) {
-            $photoPath = $request->file('dish_photo')->store('dish_photos', 'public');
-            $dish->dish_photo = $photoPath;
-        }
-    
-        // Actualizar los datos del plato
-        $dish->update([
-            'user_id' => $validated['user_id'],
-            'dish_name' => $validated['dish_name'],
-            'dish_description' => $validated['dish_description'],
-            'dish_price' => $validated['dish_price'],
-            'category_id' => $validated['category_id'],
-        ]);
-    
-        // Redirigir con mensaje de éxito
-        return redirect()->route('dish.index')->with('success', 'Dish updated successfully!');
-    }    
+{
+    // Validar los datos del formulario para actualizar
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'dish_name' => 'required|string|max:255',
+        'dish_description' => 'nullable|string',
+        'dish_price' => 'required|numeric|min:0',
+        'dish_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'category_id' => 'required|exists:categories,id',
+    ]);
+
+    // Actualizar la foto si se proporciona
+    if ($request->hasFile('dish_photo')) {
+        $photoPath = 'images/' . $request->file('dish_photo')
+            ->move(public_path('images'), uniqid() . '.' . $request->file('dish_photo')->getClientOriginalExtension())
+            ->getFileName();
+        $dish->dish_photo = $photoPath;
+    }
+
+    // Actualizar los datos del plato
+    $dish->update([
+        'user_id' => $validated['user_id'],
+        'dish_name' => $validated['dish_name'],
+        'dish_description' => $validated['dish_description'],
+        'dish_price' => $validated['dish_price'],
+        'category_id' => $validated['category_id'],
+    ]);
+
+    // Redirigir con mensaje de éxito
+    return redirect()->route('dish.index')->with('success', 'Dish updated successfully!');
+}
+
     /**
      * Remove the specified resource from storage.
      */
