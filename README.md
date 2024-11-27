@@ -1,66 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🍴 Restaurant Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Welcome to the **Restaurant Management System**, a modern solution for optimizing restaurant operations. This project is designed to manage dishes, suppliers (web users), and provide a dynamic API management system. Here's a detailed breakdown of its features:
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
+## 📸 Website Preview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Here are some images and videos showcasing the **Restaurant Management System** in action.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Screenshots:
+![Dashboard](github/media/screenshots/dashboard.png)
+*The Dashboard of the Restaurant Management System.*
 
-## Learning Laravel
+![API Documentation](github/media/screenshots/api-doc.png)
+*The API Documentation Panel for managing endpoints.*
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Demo Video:
+[Watch the demo video](github/media/videos/demo.mp4) showcasing the system's features, including dish management, user reviews, and API usage.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
+## 🖥️ Installation & Setup
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Follow these steps to set up the project locally:
 
-## Laravel Sponsors
+```bash
+# Step 1: Clone the repository
+git clone https://github.com/your-username/restaurant-management-system.git
+cd restaurant-management-system
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Step 2: Install dependencies
+composer install
+npm install
 
-### Premium Partners
+# Step 3: Configure the environment
+cp .env.example .env
+# Update database credentials and API base URL in the .env file
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Step 4: Run database migrations
+php artisan migrate
 
-## Contributing
+# Step 5: Start the local development server
+php artisan serve
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## 🎯 Features
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. **Dish & Supplier Management**
+- Add and update dishes served in the restaurant.
+- Manage suppliers who provide ingredients or other services.
 
-## Security Vulnerabilities
+### 2. **API Management**
+- Built with **API Request**, allowing the administrator to manage API endpoints directly.
+- Includes a visual documentation panel for viewing all available endpoints.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. **Endpoint Overview**
+- Below are the available API endpoints (ready for production deployment on Hostinger):
+  ```php
+  $endpoints = [
+      'districts' => 'https://grupo1.escueladeprogramacion.net/api/districts',
+      'district_by_id' => 'https://grupo1.escueladeprogramacion.net/api/districts/1',
+      'provinces' => 'https://grupo1.escueladeprogramacion.net/api/provinces',
+      'province_by_id' => 'https://grupo1.escueladeprogramacion.net/api/provinces/1',
+      'corregimientos' => 'https://grupo1.escueladeprogramacion.net/api/corregimientos',
+      'corregimiento_by_id' => 'https://grupo1.escueladeprogramacion.net/api/corregimientos/1',
+  ];
+   ``` 
+## 🔗 API Documentation
 
-## License
+The system includes an integrated API documentation panel, which can be accessed after setup:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Access the API documentation**:  
+   Visit `/api/documentation` in your browser to explore and interact with the available endpoints.
+
+2. **Features of the API documentation**:
+   - **Endpoint Explorer**: View and test all available API endpoints interactively.
+   - **Access Control**: Secure your API with admin-managed access tokens, ensuring only authorized users can make certain requests.
+   - **Real-time Updates**: The documentation automatically reflects any changes made to the API, ensuring it stays up-to-date with the latest modifications.
+
+--- 
+
+
+## 📊 Dynamic Top 10 Dishes
+
+The **Top 10 Best Rated Dishes** feature dynamically updates based on user reviews and ratings. Here's how it works:
+
+1. **User Ratings**: Users rate dishes through the platform after trying them.  
+2. **Average Rating Calculation**: The system calculates the average rating for each dish based on all submitted reviews.
+3. **Real-time Updates**: The top 10 highest-rated dishes are displayed in real-time on the dashboard, updating as new ratings are submitted.
+
+This feature ensures that the most popular dishes always appear at the top, reflecting real-time user feedback.
+
+## ✨ Future Features
+
+We have exciting plans to further enhance the Restaurant Management System. Here are some of the upcoming features:
+
+1. **Advanced Analytics**:  
+   - Detailed reporting and dashboards to track dish ratings, supplier performance, and user activity.  
+   - Insights will help restaurant owners and managers make data-driven decisions.
+
+2. **Mobile Optimization**:  
+   - A fully responsive design that ensures the platform is accessible and optimized for mobile and tablet users.  
+   - Enjoy a seamless experience across all devices.
+
+3. **Localization**:  
+   - Support for multiple languages to make the platform accessible to users worldwide.  
+   - This will allow for a more personalized experience and cater to a global audience.
+
+## 📧 Contact
+
+If you have any questions, feedback, or issues, don't hesitate to reach out to us:
+
+- **Email**: [support@restaurant-management.com](mailto:support@restaurant-management.com)  
+- **Website**: [Restaurant Management System](https://grupo1.escueladeprogramacion.net)  
+- **GitHub Issues**: [Submit bugs or feature requests](https://github.com/your-username/restaurant-management-system/issues) directly through the repository.
+
