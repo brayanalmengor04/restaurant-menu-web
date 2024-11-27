@@ -18,7 +18,7 @@
 
 @if($dish->user->background_image)
     <!-- Imagen de fondo -->
-    <img src="{{ asset($dish->user->background_image) }}" class="card-img-top" alt="Background Image">
+    <img src="{{ asset($dish->dish_photo) }}" class="card-img-top" alt="Background Image">
 @endif
                 <div class="card-body"> 
                     <ul class="list-group list-group-flush">
