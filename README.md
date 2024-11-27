@@ -42,7 +42,7 @@ php artisan migrate
 # Step 5: Start the local development server
 php artisan serve
 
-
+```
 ## 🎯 Features
 
 ### 1. **Dish & Supplier Management**
