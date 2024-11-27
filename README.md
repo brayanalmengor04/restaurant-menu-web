@@ -25,8 +25,8 @@ Follow these steps to set up the project locally:
 
 ```bash
 # Step 1: Clone the repository
-git clone https://github.com/your-username/restaurant-management-system.git
-cd restaurant-management-system
+git clone https://github.com/brayanalmengor04/restaurant-menu-web.git
+cd restaurant-menu-web.
 
 # Step 2: Install dependencies
 composer install
