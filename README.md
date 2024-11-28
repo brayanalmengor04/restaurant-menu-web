@@ -310,6 +310,5 @@ We plan to enhance the platform with the following features:
 For any questions, suggestions, or support, feel free to contact us:
 - **Email**: [support@restaurant-management.com](mailto:support@restaurant-management.com)
 - **GitHub Issues**: [Submit Issues](https://github.com/your-username/restaurant-management-system/issues)
-
 ---
-```
+
