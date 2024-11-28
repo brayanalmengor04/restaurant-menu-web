@@ -9,15 +9,14 @@ Welcome to the **Restaurant Management System**, a modern solution for optimizin
 Here are some images and videos showcasing the **Restaurant Management System** in action.
 
 ### Screenshots:
-![Dashboard](github/media/screenshots/dashboard.png)
+![Dashboard](/github/media/screenshots/dasboard.png)
 *The Dashboard of the Restaurant Management System.*
 
-![API Documentation](github/media/screenshots/api-doc.png)
+![API Documentation](github/media/screenshots/Api.png)
 *The API Documentation Panel for managing endpoints.*
 
 ### Demo Video:
 [Watch the demo video](github/media/videos/demo.mp4) showcasing the system's features, including dish management, user reviews, and API usage.
-
 ---
 ## 🖥️ Installation & Setup
 
