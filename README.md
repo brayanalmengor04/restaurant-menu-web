@@ -16,7 +16,7 @@ Here are some images and videos showcasing the **Restaurant Management System** 
 *The API Documentation Panel for managing endpoints.*
 
 ### Demo Video:
-[Watch the demo video](github/media/videos/demo.mp4) showcasing the system's features, including dish management, user reviews, and API usage.
+[![Watch the demo video](https://img.youtube.com/vi/KqFHVsGZBb8/maxresdefault.jpg)](https://youtu.be/KqFHVsGZBb8)
 ---
 ## 🖥️ Installation & Setup
 
