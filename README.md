@@ -140,6 +140,20 @@ php artisan migrate
 # Step 5: Start the development server
 php artisan serve
 ```
+## Initial Setup
+
+After cloning the repository and installing the necessary dependencies, you can load predefined data into the database using the following seeders. These include an admin user, locations, and main dishes for the application.
+
+### Commands to run the seeders
+
+1. **Generate an admin user and customer:**
+   ```bash
+   php artisan db:seed --class=AdminUserSeeder
+   php artisan db:seed --class=LocationSeeder
+   php artisan db:seed --class=DishesSeeder
+```
+
+This should be a clear guide for anyone setting up the project on their local machine.
 
 ---
 
